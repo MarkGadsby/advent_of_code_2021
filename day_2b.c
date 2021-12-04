@@ -12,7 +12,7 @@ int main()
     char instruction[MAX_STR];
     int value = 0;
 
-    FILE* fp = fopen("directions.txt", "r");
+    FILE* fp = fopen("day_2data.txt", "r");
     
     while (!feof (fp))
     {  

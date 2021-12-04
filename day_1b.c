@@ -11,7 +11,7 @@ struct Ladder
 
 int main()
 {
-    FILE* fp = fopen("input.txt", "r");
+    FILE* fp = fopen("day_1data.txt", "r");
 
     struct Ladder prev;
     struct Ladder curr;

@@ -1,102 +1,43 @@
 #include <stdio.h>
 #include <string.h>
+#include <math.h>
 
 int main()
 {
-    FILE* fp = fopen("binary.txt", "r");
+    FILE* fp = fopen("day_3data.txt", "r");
     
     int total = 0;
-    int slot_0 = 0;
-    int slot_1 = 0;
-    int slot_2 = 0;
-    int slot_3 = 0;
-    int slot_4 = 0;
+    int slot_array[12];
+    char binary_num[16];
 
-    char binary_chars[12000];
-    char bucket[13];
-    int indexer = 0;
+    memset(slot_array, 0, sizeof(int) * 12);
 
-    while (!feof (fp))
+    while (!feof(fp))
     {  
-        fscanf(fp, "%s", bucket);
-        strcpy(&(binary_chars[indexer]), bucket);
-        
-        indexer += 12;
+        fscanf(fp, "%s", binary_num);
+
+        for (int i = 0; i < 12; i++)
+        {
+            if (binary_num[i] == '1')
+                slot_array[i]++;
+        }
+        total++;
     }
-
-//    printf("%s", binary_chars);
-
-    for (int i = 0; i < 12000; i++)
-    {
-        if ((i % 5) == 0)
-        {
-            if (binary_chars[i] == '0')
-                slot_0++;
-        }
-        if ((i % 5) == 1)
-        {
-            if (binary_chars[i] == '0')
-                slot_1++;
-        }
-        if ((i % 5) == 2)
-        {
-            if (binary_chars[i] == '0')
-                slot_2++;
-        }
-        if ((i % 5) == 3)
-        {
-            if (binary_chars[i] == '0')
-                slot_3++;
-        }
-        if ((i % 5) == 4)
-        {
-            if (binary_chars[i] == '0')
-                slot_4++;
-        }
-
-        printf("%c", binary_chars[i]);
- 
-    }
-
-    printf("\nSlot 1\t%d\n", slot_0);
-    printf("Slot 2\t%d\n", slot_1);
-    printf("Slot 3\t%d\n", slot_2);
-    printf("Slot 4\t%d\n", slot_3);
-    printf("Slot 5\t%d\n", slot_4);
 
     int gamma = 0;
     int epsilon = 0;
+    int place_holder = pow(2,11);     // 2048 1024 512 256 128 64 32 16 8 4 2 1 
+    
+    for (int i = 0; i < 12; i++)
+    {
+        if (slot_array[i] > (total / 2))
+            gamma += place_holder;
+        else
+            epsilon += place_holder;
 
-    if (slot_0 > 1200)
-        gamma += 16;
-    else
-        epsilon += 16;
-
-    if (slot_1 > 1200)
-        gamma += 8;
-    else
-        epsilon += 8;
-
-    if (slot_2 > 1200)
-        gamma += 4;
-    else
-        epsilon += 4;
-
-    if (slot_3 > 1200)
-        gamma += 2;
-    else
-        epsilon += 2;
-
-    if (slot_4 > 1200)
-        gamma += 1;
-    else
-        epsilon += 1;
-
-    printf("\n\tgamma = %d\n", gamma);
-    printf("\tepsilon = %d\n", epsilon);
-
-
-    printf("\n\n%d\n", epsilon * gamma);
+        place_holder /= 2;    
+    }
+    printf("\n\n\t\tgamma x epsilon = %d\n\n", epsilon * gamma);
 
     fclose(fp);
     return 0;
